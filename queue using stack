@@ -1,0 +1,113 @@
+// by making enqueue operation costly first method
+#include<iostream>// in this method we are going to use two stack but there are outher method which only uses one stack
+#include<stack>
+using namespace std;
+class Queue
+{
+public:
+	void push(int value)
+	{
+		while (!s1.empty())
+		{
+			s2.push(s1.top());
+			s1.pop();
+		}
+		s1.push(value);
+		while (!s2.empty())
+		{
+			s1.push(s2.top());
+			s2.pop();
+		}
+	}
+	void pop()
+	{
+		if (s1.empty())
+		{
+			cout << "queue is empty\n";
+		}
+		else
+		{
+			cout << "poped value is = " << s1.top() << endl;
+			s1.pop();
+		}
+	}
+	Queue(){}
+	~Queue() {}
+
+private:
+	stack<int> s1, s2;
+};
+int main(){}
+
+// second method by making deque operation costly
+#include<iostream>
+#include<stack>
+using namespace std;
+class Queue2
+{
+public:
+	void push(int value)
+	{
+		s1.push(value);
+	}
+	void pop()
+	{
+		if (s1.empty() && s2.empty())
+		{
+			cout << "queue is empty\n";
+			return;
+		}
+		if (s2.empty())
+		{
+			while(!s1.empty())
+			{
+				s2.push(s1.top());
+				s1.pop();
+			}
+		}
+		cout << "poped element is = " << s2.top();
+		s2.pop();
+	}
+	Queue2(){}
+	~Queue2() {}
+
+private:
+	stack<int>s1, s2;
+};
+int main(){}
+
+// this is a recurresive method to pop the element of the stack
+#include<iostream>
+#include<stack>
+using namespace std;
+class Queue3
+{
+public:
+	void push(int val)
+	{
+		s.push(val);
+	}
+	int pop()
+	{
+		if (s.empty())
+		{
+			return -1;
+		}
+		int x = s.top();
+		s.pop();
+		if (s.empty())
+		{
+			return x;
+		}
+		int item = pop();
+		s.push(x);
+		return item;
+	}
+	Queue3() {}
+	~Queue3(){}
+
+private:
+	stack<int>s;
+};
+
+int main(){}
