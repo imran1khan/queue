@@ -91,7 +91,7 @@ public:
 		delete[] this->arr;
 	}
 private:
-	int* arr;
+	int* arr=NULL;
 	int size = 0;
 	int front = -1;
 	int rear = -1;
