@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+	Node(){}
+	Node(int value)
+	{
+		this->data = value;
+		this->next = NULL;
+	}
+	~Node() {}
+	int data = 0;
+	Node* next = NULL;
+private:
+
+};
+class listQueue
+{
+public:
+	void peek()
+	{
+		if (head != NULL)
+		{
+			cout << head->data;
+		}
+		else
+		{
+			cout << "queue is empty\n";
+		}
+	}
+	void push(int value)
+	{
+		if (size==nodecount)
+		{
+			cout << "queue is full\n";
+			return;
+		}
+		Node* newnode = new Node(value);
+		if (head==NULL)
+		{
+			newnode->next = head;
+			head = newnode;
+			nodecount++;
+			return;
+		}
+		Node* temp = head;
+		while (temp->next!=NULL)
+		{
+			temp = temp->next;
+		}
+		temp->next = newnode;
+		newnode->next = NULL;
+		nodecount++;
+	}
+	void pop()
+	{
+		if (head==NULL)
+		{
+			cout << "Queue is empty\n";
+			return;
+		}
+		cout << "poped element = " << head->data;
+		Node* temp = head;
+		head = head->next;
+		delete temp;
+		temp = NULL;
+		nodecount--;
+	}
+	listQueue(){}
+	listQueue(int s) 
+	{
+		this->size = s;
+		this->head = NULL;
+	}
+	~listQueue() 
+	{
+		while (head!=NULL)
+		{
+			Node* temp = head;
+			head = head->next;
+			delete temp;
+		}
+	}
+
+private:
+	int size = 0;
+	int nodecount = 0;
+	Node* head = NULL;
+};
+int main()
+{
+	listQueue a(3);
+	//a.push(3);
+	//a.push(2);
+	//a.push(22);
+	//a.push(22);
+	//a.peek();
+}
