@@ -1,0 +1,120 @@
+#include<iostream>
+using namespace std;
+class arrayQueue
+{
+public:
+	void peek()
+	{
+		if (isEmpty())
+		{
+			cout << "queue is empty\n";
+		}
+		else
+		{
+			cout << "top of the queue is = " << arr[0] << endl;
+		}
+	}
+	void peekindex(int index)
+	{
+		if (isEmpty())
+		{
+			cout << "queue is empty\n";
+		}
+		else
+		{
+			if (index<=0)
+			{
+				return;
+			}
+			for (int i = 0; i <=rear; i++)
+			{
+				if(i+1==index)
+				{
+					int data = arr[i];
+					cout << data << endl;
+					return;
+				}
+			}
+			cout << "invalid index\n";
+		}
+	}
+	void push(int val)
+	{
+		if (isFull())
+		{
+			cout << "queue overflow\n";
+		}
+		else
+		{
+			rear++;
+			arr[rear] = val;
+		}
+	}
+	void pop()
+	{
+		if (isEmpty())
+		{
+			cout << "queue underflow\n";
+		}
+		else
+		{
+			cout << "poped element is = " << arr[0] << endl;
+			cout << "current value of rear = " << arr[rear] << endl;
+			for (int i = 0; i <= rear; i++)
+			{
+				arr[i] = arr[i + 1];
+			}
+			rear--;
+			cout << "new top of the queue =" << arr[0]<<endl;
+			cout << "current value of rear is =" << arr[rear] << endl;
+		}
+	}
+	bool isEmpty()
+	{
+		if (rear==-1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool isFull()
+	{
+		if (rear==size)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	arrayQueue() {}
+	arrayQueue(int size) 
+	{
+		this->arr = new int[size];
+		this->size = size;
+		rear = -1;
+	}
+	~arrayQueue() 
+	{
+		delete[] this->arr;
+		this->arr = NULL;
+	}
+
+private:
+	int* arr = NULL;
+	int rear = -1;
+	int size = 0;
+};
+int main()
+{
+	arrayQueue a(5);
+	a.push(22);
+	a.push(2);
+	a.push(33);
+	//a.pop();
+	//a.peekindex(1);
+}
