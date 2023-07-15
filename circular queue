@@ -1,0 +1,103 @@
+#include<iostream>
+using namespace std;
+class cQueue
+{
+public:
+	void top()
+	{
+		if (isEmpty())
+		{
+			cout << "queue is empty\n";
+		}
+		else
+		{
+			cout << arr[front] << endl;
+		}
+	}
+	void push(int data)
+	{
+		if (isFull())
+		{
+			cout << "queue is full\n";
+		}
+		else
+		{
+			if (front==-1 && rear==-1)
+			{
+				front = 0;
+				rear = 0;
+			}
+			else
+			{
+				rear = (rear + 1) % size;
+			}
+			arr[rear] = data;
+		}
+	}
+	void pop()
+	{
+		if (isEmpty())
+		{
+			cout << " queue is empty\n";
+		}
+		else
+		{
+			cout << "poped element is = " << arr[front] << endl;
+			if (front==rear)// means front and rear is point to the same index
+			{
+				front = -1;
+				rear = -1;
+				cout << "front and rear is same so reset\n";
+			}
+			else
+			{
+				front = (front + 1) % size;
+				cout << "new element of front is = " << arr[front] << endl;
+			}
+		}
+	}
+	bool isFull()
+	{
+		if ((rear+1)%size==front)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool isEmpty()
+	{
+		if (front==-1 && rear==-1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	cQueue() {}
+	cQueue(int size)
+	{
+		this->size = size;
+		this->arr = new int[size];
+		this->front = -1;
+		this->rear = -1;
+	}
+	~cQueue()
+	{
+		delete[] this->arr;
+	}
+private:
+	int* arr;
+	int size = 0;
+	int front = -1;
+	int rear = -1;
+};
+int main()
+{
+	cQueue q(3);
+	q.pop();
+}
