@@ -1,0 +1,134 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+	Node(){}
+	Node(int value)
+	{
+		this->data = value;
+		this->next = NULL;
+	}
+	~Node() {}
+	int data = 0;
+	Node* next = NULL;
+	Node* previous = NULL;
+private:
+
+};
+class listQueue
+{
+public:
+	void peek()
+	{
+		if (head != NULL)
+		{
+			cout << head->data;
+		}
+		else
+		{
+			cout << "queue is empty\n";
+		}
+	}
+	void pushF(int value)
+	{
+		if (size == nodecount)
+		{
+			cout << "queue is full\n";
+			return;
+		}
+		Node* newnode = new Node(value);
+		if (head == NULL && tail == NULL)
+		{
+			newnode->next = head;
+			newnode->previous = NULL;
+			head = newnode;
+			tail = newnode;
+			nodecount++;
+			return;
+		}
+		newnode->next = head;
+		head->previous = newnode;
+		head = newnode;
+		nodecount++;
+	}
+	void pushB(int value)
+	{
+		if (size==nodecount)
+		{
+			cout << "queue is full\n";
+			return;
+		}
+		Node* newnode = new Node(value);
+		if (head==NULL && tail==NULL)
+		{
+			newnode->next = head;
+			newnode->previous = NULL;
+			head = newnode;
+			tail = newnode;
+			nodecount++;
+			return;
+		}
+		tail->next = newnode;
+		newnode->previous = tail;
+		tail = newnode;
+		nodecount++;
+	}
+	void pop()
+	{
+		if (head==NULL)
+		{
+			cout << "Queue is empty\n";
+			return;
+		}
+		cout << "poped element = " << head->data;
+		if (head==tail)
+		{
+			tail = NULL;
+			Node* temp = head;
+			head = head->next;
+			delete temp;
+			return;
+		}
+		Node* temp = head;
+		head = head->next;
+		head->previous = NULL;
+		delete temp;
+		nodecount--;
+	}
+	listQueue(){}
+	listQueue(int s) 
+	{
+		this->size = s;
+		this->head = NULL;
+		this->tail = NULL;
+	}
+	~listQueue() 
+	{
+		while (head!=NULL)
+		{
+			if (head==tail)
+			{
+				tail = NULL;
+			}
+			Node* temp = head;
+			head = head->next;
+			delete temp;
+		}
+	}
+
+private:
+	int size = 0;
+	int nodecount = 0;
+	Node* tail = NULL;
+	Node* head = NULL;
+};
+int main()
+{
+	listQueue a(3);
+	a.pushF(2);
+	a.pushB(3);
+	a.peek();
+	a.pop(); cout << endl;
+	a.peek();
+}
