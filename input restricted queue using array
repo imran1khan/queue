@@ -1,0 +1,110 @@
+#include<iostream>
+using namespace std;
+class aQueue
+{
+public:
+	void push(int value)
+	{
+		if (rear==size-1)
+		{
+			cout << "queue overflow\n";
+		}
+		else
+		{
+			if (rear==-1 && front==-1)
+			{
+				rear++;
+				front++;
+			}
+			else
+			{
+				rear++;
+			}
+			arr[rear] = value;
+		}
+	}
+	void popfront()
+	{
+		if (rear==-1 || front>rear)
+		{
+			cout << "stack is empty\n";
+		}
+		else
+		{
+			cout << "poped element = " << arr[front] << endl;
+			front++;
+			if (front>rear)
+			{
+				front = rear = -1;
+				cout << "reseting front and rear\n";
+			}
+			else
+			{
+				cout << "new front = " << arr[front] << endl;
+			}
+		}
+	}
+	void popback()
+	{
+		if (rear == -1 || front > rear)
+		{
+			cout << "stack is empty\n";
+		}
+		else
+		{
+			cout << "poped element = " << arr[rear] << endl;
+			rear--;
+			if (front > rear)
+			{
+				front = rear = -1;
+				cout << "reseting front and rear\n";
+			}
+			else
+			{
+				cout << "new rear = " << arr[rear] << endl;
+			}
+		}
+	}
+	void peek()
+	{
+		if (front==-1 || front>rear)
+		{
+			cout << "stack is empty\n";
+		}
+		else
+		{
+			cout << arr[front] << endl;
+		}
+	}
+	aQueue() {}
+	aQueue(int size) 
+	{
+		this->size = size;
+		this->arr = new int[size];
+		front = -1;
+		rear = -1;
+	}
+	~aQueue()
+	{
+		delete[] arr;
+		arr = NULL;
+	}
+
+private:
+	int* arr = NULL;
+	int front = -1;
+	int rear = -1;
+	int size = 0;
+};
+int main()
+{
+	aQueue a(2);
+	a.push(12);
+	a.push(34);
+	//a.popfront();
+	//a.popfront();
+	//a.popback();
+	//a.popback();
+	a.push(2);
+	a.peek();
+}
