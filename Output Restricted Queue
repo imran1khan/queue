@@ -1,0 +1,148 @@
+#include<iostream>
+using namespace std;
+class aQueue
+{
+public:
+	void getFront()
+	{
+		if (isEmpty())
+		{
+			cout << "queue is empty\n";
+		}
+		else
+		{
+			cout << "front value is = " << arr[front];
+		}
+	}
+	void getRear()
+	{
+		if (isEmpty() || rear<0)
+		{
+			cout << " queue is empty\n" << endl;
+		}
+		else
+		{
+			cout << "rear value is = " << arr[rear];
+		}
+	}
+	void pushF(int value)
+	{
+		if (isFull())
+		{
+			cout << "queue is full\n";
+			return;
+		}
+		else
+		{
+			if (front==-1 && rear==-1)
+			{
+				front = 0;
+				rear = 0;
+			}
+			else if(front==0)
+			{
+				front = size - 1;// because we are inserting at front 
+			}					//and because front is on the starting, so to save time we have to take front back to the array
+			else
+			{
+				front--;
+			}
+			arr[front] = value;
+		}
+	}
+	void pushB(int value)
+	{
+		if (isFull())
+		{
+			cout << "queue is full\n";
+		}
+		else
+		{
+			if (front==-1 && rear==-1)
+			{
+				front = 0;
+				rear = 0;
+			}
+			else if(rear==size-1)
+			{
+				rear = 0;
+			}
+			else
+			{
+				rear++;
+			}
+			arr[rear] = value;
+		}
+	}
+	void pop()
+	{
+		if (isEmpty())
+		{
+			cout << "queue underflow\n";
+			return;
+		}
+		if (front==rear) // whn rear and front is equal and someone want to pop the element then we have to just set them again
+		{
+			cout << "poped elemennt is = " << arr[front] << endl;
+			front = -1;
+			rear = -1;
+			return;
+		}
+		if (front==size-1)
+		{
+			cout << "poped elemennt is = " << arr[front] << endl;
+			front = 0;
+			return;
+		}
+		cout << "poped elemennt is = " << arr[front] << endl;
+		front++;
+	}
+	bool isEmpty()
+	{
+		if (front==-1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool isFull()
+	{
+		if ((front==0 && rear==size-1)||front==rear+1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	aQueue() {}
+	aQueue(int size) 
+	{
+		this->size = size;
+		this->arr = new int[size];
+		this->front = -1;
+		this->rear = -1;
+	}
+	~aQueue()
+	{
+		delete[] arr;
+	}
+private:
+	int size = 0;
+	int* arr = NULL;
+	int front = -1;
+	int rear = -1;
+};
+int main()
+{
+	aQueue a(3);
+	a.pushF(2);
+	a.pushF(4);
+	a.pushF(33);
+	a.getFront();
+	a.getRear();
+}
