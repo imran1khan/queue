@@ -1,0 +1,130 @@
+#include <iostream>
+#include <stdexcept>
+
+template <typename T>
+class MyDeque {
+private:
+    T* array;
+    int capacity;
+    int frontIndex;
+    int rearIndex;
+
+public:
+    MyDeque(int initialCapacity = 10) {
+        capacity = initialCapacity;
+        array = new T[capacity];
+        frontIndex = rearIndex = -1;
+    }
+
+    ~MyDeque() {
+        delete[] array;
+    }
+
+    bool isEmpty() const {
+        return frontIndex == -1;
+    }
+
+    int size() const {
+        if (isEmpty()) {
+            return 0;
+        }
+        return (rearIndex - frontIndex + 1 + capacity) % capacity;
+    }
+
+    void pushFront(const T& value) {
+        if (size() == capacity - 1) {
+            resize();
+        }
+        if (isEmpty()) {
+            frontIndex = rearIndex = 0;
+        } else {
+            frontIndex = (frontIndex - 1 + capacity) % capacity;
+        }
+        array[frontIndex] = value;
+    }
+
+    void pushBack(const T& value) {
+        if (size() == capacity - 1) {
+            resize();
+        }
+        if (isEmpty()) {
+            frontIndex = rearIndex = 0;
+        } else {
+            rearIndex = (rearIndex + 1) % capacity;
+        }
+        array[rearIndex] = value;
+    }
+
+    T& front() {
+        if (isEmpty()) {
+            throw std::out_of_range("Deque is empty");
+        }
+        return array[frontIndex];
+    }
+
+    T& back() {
+        if (isEmpty()) {
+            throw std::out_of_range("Deque is empty");
+        }
+        return array[rearIndex];
+    }
+
+    void popFront() {
+        if (isEmpty()) {
+            throw std::out_of_range("Deque is empty");
+        }
+        if (frontIndex == rearIndex) {
+            frontIndex = rearIndex = -1;
+        } else {
+            frontIndex = (frontIndex + 1) % capacity;
+        }
+    }
+
+    void popBack() {
+        if (isEmpty()) {
+            throw std::out_of_range("Deque is empty");
+        }
+        if (frontIndex == rearIndex) {
+            frontIndex = rearIndex = -1;
+        } else {
+            rearIndex = (rearIndex - 1 + capacity) % capacity;
+        }
+    }
+
+private:
+    void resize() {
+        int newCapacity = capacity * 2;
+        T* newArray = new T[newCapacity];
+
+        int j = 0;
+        for (int i = frontIndex; i != rearIndex; i = (i + 1) % capacity) {
+            newArray[j++] = array[i];
+        }
+        newArray[j] = array[rearIndex];
+
+        delete[] array;
+        array = newArray;
+        capacity = newCapacity;
+        frontIndex = 0;
+        rearIndex = j;
+    }
+};
+
+int main() {
+    MyDeque<int> deque;
+
+    deque.pushBack(1);
+    deque.pushBack(2);
+    deque.pushFront(0);
+    deque.pushBack(3);
+
+    std::cout << "Front: " << deque.front() << std::endl;
+    std::cout << "Back: " << deque.back() << std::endl;
+
+    deque.popFront();
+    deque.popBack();
+
+    std::cout << "Size: " << deque.size() << std::endl;
+
+    return 0;
+}
